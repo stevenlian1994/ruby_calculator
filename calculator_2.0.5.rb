@@ -3,7 +3,12 @@
 #Trial (5+(2+2)+(2*(3+3))) = 21 works
 
 class Array
-
+	def exponent
+		while self.include? "^"
+			i = self.index("^") 
+			self[i-1..i+1]= self[i-1].to_f.**(self[i+1].to_f).to_s
+		end
+	end	
 	def multiply
 		while self.include? "*"
 			i = self.index("*") 
@@ -34,9 +39,9 @@ class Array
 		while self.include? "("
 			x = self.join #=> (2+2)+(3+3)
 
-			y = x.match(/(\([\d\.\+\*\/\-]+\))/) #<MatchData "(2+2)" 1:"(2+2)">
+			y = x.match(/(\([\d\.\^\+\*\/\-]+\))/) #<MatchData "(2+2)" 1:"(2+2)">
 			# $1  #=> first match data "(2+2)"
-			g = $1.scan(/[\d]+\.?\d*|\+|\*|\/|\-|\(|\)/) #+> ["(", "2", "+", "2", ")"]
+			g = $1.scan(/[\d]+\.?\d*|\^|\+|\*|\/|\-|\(|\)/) #+> ["(", "2", "+", "2", ")"]
 
 			(0..self.length-1).each do |x|
 				if self[x..x+g.length-1] == g
@@ -45,6 +50,9 @@ class Array
 			end
 			#need to find the index where ["(", "2", "+", "2", ")"] starts in self
 			self[@i..@i+g.length-1] = self[@i+1..@i+g.length-2].calculate
+		end
+		if self.include? "^"
+			self.exponent
 		end
 
 		if self.include? "/"
@@ -66,6 +74,6 @@ end
 p "User please input calculations: "
 input = gets.chomp
 p "Your requested calculation is: #{input}"
-stack = input.scan(/[\d]+\.?\d*|\+|\*|\/|\-|\(|\)/)
+stack = input.scan(/[\d]+\.?\d*|\^|\+|\*|\/|\-|\(|\)/)
 p "array:#{stack}" 
 p stack.calculate
