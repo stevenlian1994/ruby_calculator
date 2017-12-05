@@ -2,23 +2,73 @@ CHANGELOG
 
 calculator (initial)
 
-calculator (2.0)
+calculator (1.2.0)
 	#Directions: be able to do 4+4*2+3*5*5+2 = 89
 	: Ruby methods calculate, multiply, add
 
-calculator (3.0)
+calculator (1.3.0)
 	#Directions: be able to do 14+14*12+300*5*55+2 = 82684
 	: split calculation into largers numbers
 	: Method scan(Regexp)
 
-calculator (4.0)
+calculator (1.4.0)
 	#Directions: be able to do 14*4.5+3.33333 
 	: calculate integers to floats
 
-calculator (5.0)
-	#Directions: be able to do 10/3
+calculator (1.5.0)
+	#Directions: be able to do 10/3 && 6*(3+3)
 	: Add Divide and Minus Methods
 	: Order priority
 
-calculator (initial)
+calculator (1.5.5)
+	#Directions: be able to 10/5*5/4
 
+calculator (1.6.0)
+	#Directions: be able to 3*(5+6-1)-5
+
+calculator (1.7.0) 
+	#duplicate of 1.5.0
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TESTS 
+1. 
+input:  400/6*457-3229*(7/4)
+result: ["24815.916666666668"]
+correct
+
+2.
+input (555+(666-222)*4)
+result: ["2331.0"]
+correct
+
+3.
+input (555+(666-222+(666-222+(666-222+(666-222))))*4):  ["555.0"]    :WORKS
+input (5+(2*2*(2*2*(2*2*(2*2*(2*2*(3+3))))))): ["6149.0"]: WORKS
+notes: nested paranthesis work well but adjacent paranthesis fail
+(5+(1+1)+(1+1)) : DOESNT WORK
+
+SOLVE USING STACK!
+stack =  []
+push first "(" with last ")")
+["(", ")"]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.8.0 Approach
+use regexp to locate index of first operation with no ( or ) inside so... (3+3-5) would match and for 4*(3-1) 3-1 would match
+	-success
+		-the problem is that i had to convert the array into string to be able to compare it to regexp and at that point, modifying the orginal array is very complicated
+			-the index for strings dont allign with arrays
+				-if i changed "3.0+(2+2)" is not comparable to ["3.0" "+" "(" etc.] because of the floats
+				-at this point i wasnt sure whether i wanted to go down this path - doesnt seem like it was progressive? even though arrays are data structures..
+
+
+
+Final thoughts of my progression
+-able to do basic arithmetic, with limited use of paranthesis
+-can work with negatives, integers, and floats
+
+If i were to describe my app in a few lines
+	:This app is a basic calculator that can do arithmetic with negatives, integers, and floats( so decimals and fractions).  Paranthesis work situationally, but haven't been ironed out.
+	:The app takes in user input as string, converts it into numbers and operators, and does operations one by one in logical progression until there is only one number left.
+
+Showcase: calculator_1.7.0.rb

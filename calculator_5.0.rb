@@ -1,6 +1,25 @@
-#Directions: be able to do 2+3-10/5*6
+#Directions: be able to do 6*(3+3)
+
+# (5+6-((4-1)/3))+1
+#recurs.
+#save the last "(" and first ")"
+#calculate witihin
+#replace
+#recurs until no "("
 
 class Array
+	def paranthesis_op
+
+			i = self.rindex("(")
+			j = self.index(")")
+			p array = self[i+1..j-1]
+			self[i..j] = array.calculate
+			
+
+
+	end
+
+
 	def multiply
 		while self.include? "*"
 			i = self.index("*") #=> 3
@@ -49,6 +68,11 @@ class Array
 
 
 	def calculate
+		while self.include? "("
+			self.paranthesis_op
+			p self
+		end
+
 		if self.include? "/"
 			self.divide
 		end
@@ -65,7 +89,7 @@ class Array
 		if self.include? "-"
 			self.minus
 		end
-
+		return self
 	end
 end
 
@@ -73,7 +97,7 @@ p "Please input calculations: "
 input = gets.chomp #=> 2+3-10/5*6
 p "Your requested calculation is: #{input}"
 
-p stack = input.scan(/[\d]+\.?\d*|\+|\*|\/|\-/) #=> ["2", "+", "3", "-", "10", "/", "5", "*", "6"]
+p stack = input.scan(/[\d]+\.?\d*|\+|\*|\/|\-|\(|\)/) #=> ["4", "*", "(", "3", "+", "3", ")"]
 
 
 
