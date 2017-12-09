@@ -13,8 +13,11 @@
 # Trial 9 3^3 = 27
 # Trial 10 3^-2 = 1/9
 # Trial 11 3^(1+1) = 9
-# Trial 12 3^(1-2) = 
-
+# Trial 12 3^(1-2) = ["0.3333333333333333"]
+# Trial 13 3^(-1.5-2.5) = ["0.012345679012345678"]
+# Trial 14 3^(2*(1+1)) = ["81.0"]
+# Trial 15 3^(2^2) = ["81.0"]
+# Trial 16 3^(2^(3-1)) = ["81.0"] 
 class Array
 	def exponent
 		i = self.index("^") 
@@ -24,7 +27,7 @@ class Array
 	end	
 
 	def negative 
-		i = self.index("&")
+		i = self.index("-")
 		self[i..i+1] = (0-self[i+1].to_f).to_s
 	end
 
@@ -41,13 +44,13 @@ class Array
 		self[i-1..i+1] = (self[i-1].to_f+self[i+1].to_f).to_s
 	end
 	def minus
-		i = self.index("-")
+		i = self.index("&")
 		self[i-1..i+1] = (self[i-1].to_f-self[i+1].to_f).to_s
 	end
 
 	def calculate
 
-		while self.include? "&"
+		while self.include? "-"
 			self.negative
 		end
 
@@ -57,12 +60,14 @@ class Array
 			#turn array into string
 			p x = self.join #=> (2+2)+(3+3)
 			#compare string to regexp
-			p x.match(/(\([\d\.\^\+\*\/\-]+\))/) #<MatchData "(-2-2)" 1:"(-2-2)">
+			p x.match(/(\([\d\.\^\+\*\/\-\&]+\))/) #<MatchData "(-2-2)" 1:"(-2-2)">
 			# $1  #=> first match data "(2+2)"
-			p g = $1.scan(/[\d]+\.?\d*|\^|\+|\*|\/|\-|\(|\)/) 
+			p g = $1.scan(/\-?[\d]+\.?\d*|\^|\+|\*|\/|\&|\(|\)/) #+> ["(", "2", "+", "2", ")"]
 
 
 			(0..self.length-1).each do |x|
+				self[x..x+g.length-1]
+				g
 				if self[x..x+g.length-1] == g
 					@i = x
 				end
@@ -84,7 +89,7 @@ class Array
 		while self.include? "+"
 			self.add
 		end
-		while self.include? "-"
+		while self.include? "&"
 			self.minus
 		end
 		return self
@@ -102,3 +107,4 @@ p "Calculation input: "
 input = gets.chomp
 p input = input.scan(/\d+\.?\d*|\+|\-|\*|\/|\&|\(|\)|\^/)
 p input.calculate
+
