@@ -18,7 +18,8 @@
 # Trial 14 3^(2*(1+1)) = ["81.0"]
 # Trial 15 3^(2^2) = ["81.0"]
 # Trial 16 3^(2^(3-1)) = ["81.0"] 
-# Trial 17 6/2*(1+2)
+# Trial 17 6/2*(1+2) = ["9.0"]
+# Trial 18 6/2/2*(1+4) = ["7.5"]
 class Array
 	def exponent
 		i = self.index("^") 
@@ -32,14 +33,28 @@ class Array
 		self[i..i+1] = (0-self[i+1].to_f).to_s
 	end
 
-	def multiply
-		i = self.index("*")
-		self[i-1..i+1] = (self[i-1].to_f*self[i+1].to_f).to_s
+	def multiply_and_divide
+		if self.index("*") != nil
+			p i = self.index("*")
+		else
+			p i = 9999
+		end
+		if self.index("/") != nil
+			p j = self.index("/")
+		else
+			p j = 9999
+		end
+
+		if (i<j)
+			self[i-1..i+1] = (self[i-1].to_f*self[i+1].to_f).to_s
+		else
+			self[j-1..j+1] = (self[j-1].to_f/self[j+1].to_f).to_s
+		end
 	end
-	def divide
-		i = self.index("/")
-		self[i-1..i+1] = (self[i-1].to_f/self[i+1].to_f).to_s
-	end
+	# def divide
+	# 	i = self.index("/")
+	# 	self[i-1..i+1] = (self[i-1].to_f/self[i+1].to_f).to_s
+	# end
 	def add
 		i = self.index("+")
 		self[i-1..i+1] = (self[i-1].to_f+self[i+1].to_f).to_s
@@ -81,12 +96,12 @@ class Array
 			self.exponent
 		end
 
-		while self.include? "*"
-			self.multiply
+		while self.include? "*" or self.include? "/"
+			self.multiply_and_divide
 		end
-		while self.include? "/"
-			self.divide
-		end
+		# while self.include? "/"
+		# 	self.divide
+		# end
 		while self.include? "+"
 			self.add
 		end
