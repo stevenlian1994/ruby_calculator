@@ -20,6 +20,8 @@
 # Trial 16 3^(2^(3-1)) = ["81.0"] 
 # Trial 17 6/2*(1+2) = ["9.0"]
 # Trial 18 6/2/2*(1+4) = ["7.5"]
+# Trial 19 (2+2)&(3&2)*(10) = ["-6.0"]
+# Trial 20 ((2+2)&(3&2))*10 = ["30.0"]
 class Array
 	def exponent
 		i = self.index("^") 
@@ -34,6 +36,7 @@ class Array
 	end
 
 	def multiply_and_divide
+		# comparing index of the first * and first / and calculating the first operation the smaller index's operation
 		if self.index("*") != nil
 			p i = self.index("*")
 		else
