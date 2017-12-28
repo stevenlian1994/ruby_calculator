@@ -121,7 +121,7 @@ end
 
 
 
-p "Calculation input: "
+p "Calculation input:  "
 
 input = gets.chomp
 p input = input.scan(/\d+\.?\d*|\+|\-|\*|\/|\&|\(|\)|\^/)
