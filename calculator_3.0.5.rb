@@ -3,7 +3,7 @@
 # Trial 3. 5.5/5 = 1.1 WORKS
 # Trial 4. -5.5/5 = -1.1 WORKS
 # Trial 5. -5.5/5-9 = [-10.1] WORKS
-# paranthesis and negatives
+# paranthesis and negatives 
 # Trial 6. (2+2)+(3*3) =  [13.0] WORKS
 # Trial 6.5 (2+(3*3/2)) = ["6.5"] WORKS
 # Trial 7 (-2+(3*3/2)) = ["2.5"] WORKS
